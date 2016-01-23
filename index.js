@@ -34,4 +34,29 @@ function diff(a, b) {
           var oldValue = element.value
           element.value = { }
           element.value[lastKey] = oldValue } }
-      return element }) }
+      return element })
+    .reduce(
+      function(groups, element) {
+        var path = element.path
+        var prefix = path.slice(0, -1).join('/')
+        var prefixGroup
+        var length = groups.length
+        for (var index = 0; index < length; index++) {
+          var group = groups[index]
+          if (group.prefix === prefix) {
+            prefixGroup = group
+            break } }
+        if (!prefixGroup) {
+          prefixGroup = {
+            prefix: prefix,
+            operations: [ ] }
+          groups.push(prefixGroup) }
+        prefixGroup.operations.push(element)
+        return groups },
+      [ ])
+    .map(function(group) {
+      return group.operations })
+    .reduce(
+      function(flattened, group) {
+        return flattened.concat(group) },
+      [ ]) }

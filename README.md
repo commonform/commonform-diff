@@ -34,5 +34,22 @@ tape(function(test) {
         path: [ 'content', 0 ],
         value: { use: 'Buyer' } } ])
 
+  test.same(
+    diff(
+      { content: [ { use: 'Buyer' }, ' shall pay $5.' ] },
+      { content: [ { use: 'Buyer' }, ' shall pay ',
+                   { blank: '' }, '.' ] }),
+    [ { operation: 'remove',
+        path: [ 'content', 1 ] },
+      { operation: 'add',
+        path: [ 'content', 1 ],
+        value: ' shall pay ' },
+      { operation: 'add',
+        path: [ 'content', 2 ],
+        value: { blank: '' } },
+      { operation: 'add',
+        path: [ 'content', 3 ],
+        value: '.' } ])
+
   test.end() })
 ```
