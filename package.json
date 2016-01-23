@@ -1,0 +1,26 @@
+{
+  "name": "commonform-diff",
+  "version": "0.0.0",
+  "description": "compare Common Forms",
+  "author": "Kyle E. Mitchell <kyle@kemitchell.com> (https://kemitchell.com/)",
+  "repository": "commonform/commonform-diff",
+  "files": [
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "index.js"
+  ],
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "defence-cli": "^1.0.5",
+    "replace-require-self": "^1.0.1",
+    "tape": "^4.4.0"
+  },
+  "scripts": {
+    "test": "defence README.md | replace-require-self | node"
+  },
+  "dependencies": {
+    "json-pointer": "^0.2.0",
+    "rfc6902-json-diff": "^0.1.2"
+  }
+}
