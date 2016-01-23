@@ -55,7 +55,15 @@ function diff(a, b) {
         return groups },
       [ ])
     .map(function(group) {
-      return group.operations })
+      return group.operations
+        .reduce(
+          function(result, element, index) {
+            // Rearrange any delete operations to move them head of add
+            // operations, adjusting operation paths as necessary to reflect
+            // the new order in which operations will be applied and their
+            // effect on array offsets within the content array.
+            return result.concat(element) },
+          [ ]) })
     .reduce(
       function(flattened, group) {
         return flattened.concat(group) },
