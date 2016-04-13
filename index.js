@@ -5,6 +5,7 @@ var rfc = require('rfc6902-json-diff')
 
 function diff(a, b) {
   return rfc(a, b)
+
     .reduce(
       function splitResolves(result, element) {
         if (element.op === 'replace') {
@@ -17,6 +18,7 @@ function diff(a, b) {
         else {
           return result.concat(element) } },
       [ ])
+
     .map(function parsePointers(element) {
       var returned = {
         operation: element.op,
@@ -26,6 +28,7 @@ function diff(a, b) {
       if (element.value) {
         returned.value = element.value }
       return returned })
+
     .map(function resolveToContentElements(element) {
       var path = element.path
       while (typeof path[path.length - 1] === 'string') {
@@ -35,6 +38,7 @@ function diff(a, b) {
           element.value = { }
           element.value[lastKey] = oldValue } }
       return element })
+
     .reduce(
       function(groups, element) {
         var path = element.path
@@ -54,6 +58,7 @@ function diff(a, b) {
         prefixGroup.operations.push(element)
         return groups },
       [ ])
+
     .map(function(group) {
       return group.operations
         .reduce(
@@ -64,6 +69,7 @@ function diff(a, b) {
             // effect on array offsets within the content array.
             return result.concat(element) },
           [ ]) })
+
     .reduce(
       function(flattened, group) {
         return flattened.concat(group) },
