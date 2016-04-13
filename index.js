@@ -7,7 +7,7 @@ function diff(a, b) {
   return rfc(a, b)
 
     .reduce(
-      function splitResolves(result, element) {
+      function splitReplacements(result, element) {
         if (element.op === 'replace') {
           return result.concat(
             { op: 'remove',
