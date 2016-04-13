@@ -12,12 +12,11 @@
   ],
   "license": "Apache-2.0",
   "devDependencies": {
-    "defence-cli": "^1.0.5",
-    "replace-require-self": "^1.0.1",
     "tape": "^4.4.0"
   },
   "scripts": {
-    "test": "defence README.md | replace-require-self | node"
+    "prepublish": "echo '~~~javascript' > README.md && cat test.js | sed 's!\\.\\/!commonform-diff!g' >> README.md && echo '~~~' >> README.md",
+    "test": "tape test.js"
   },
   "dependencies": {
     "json-pointer": "^0.2.0",

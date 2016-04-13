@@ -1,6 +1,5 @@
-~~~javascript
 var tape = require('tape')
-var diff = require('commonform-diff')
+var diff = require('./')
 
 tape(function(test) {
 
@@ -52,4 +51,3 @@ tape(function(test) {
         value: '.' } ])
 
   test.end() })
-~~~
