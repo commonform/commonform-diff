@@ -5,13 +5,13 @@ tape(function(test) {
 
   test.same(
     diff(
-      { content: [ 'a' ] },
-      { content: [ 'b' ] }),
+      { content: [ 'A' ] },
+      { content: [ 'B' ] }),
     [ { operation: 'remove',
         path: [ 'content', 0 ] },
       { operation: 'add',
         path: [ 'content', 0 ],
-        value: 'b' } ],
+        value: 'B' } ],
     'replaces content string')
 
   test.same(
