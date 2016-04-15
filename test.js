@@ -53,4 +53,47 @@ tape(function(test) {
         value: '.' } ],
     'replaces string with strings and blank')
 
+  test.same(
+    diff(
+      { content: [
+        { form: { content: [ 'A' ] } },
+        { form: { content: [ 'B' ] } },
+        { form: { content: [ 'C' ] } } ] },
+      { content: [
+        { form: { content: [ 'A' ] } },
+        { form: { content: [ 'C' ] } },
+        { form: { content: [ 'C' ] } } ] }),
+    [ { operation: 'remove',
+        path: [ 'content', 1, 'form', 'content', 0 ] },
+      { operation: 'add',
+        path: [ 'content', 1, 'form', 'content', 0],
+        value: 'C' } ],
+    'replaces child text')
+
+  test.same(
+    diff(
+      { content: [
+        { form: { content: [ 'A' ] } },
+        { form: { content: [ 'C' ] } } ] },
+      { content: [
+        { form: { content: [ 'A' ] } },
+        { form: { content: [ 'B' ] } },
+        { form: { content: [ 'C' ] } } ] }),
+    [ { operation: 'add',
+        path: [ 'content', 1 ],
+        value: { form: { content: [ 'B' ] } } } ],
+    'adds missing child')
+
+  test.same(
+    diff(
+      { content: [
+        { form: { content: [ 'A' ] } },
+        { form: { content: [ 'B' ] } },
+        { form: { content: [ 'C' ] } } ] },
+      { content: [
+        { form: { content: [ 'A' ] } },
+        { form: { content: [ 'C' ] } } ] }),
+    [ { operation: 'remove',
+        path: [ 'content', 1 ] } ],
+    'removes extra child')
   test.end() })
