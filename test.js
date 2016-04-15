@@ -11,7 +11,8 @@ tape(function(test) {
         path: [ 'content', 0 ] },
       { operation: 'add',
         path: [ 'content', 0 ],
-        value: 'b' } ])
+        value: 'b' } ],
+    'replaces content string')
 
   test.same(
     diff(
@@ -21,7 +22,8 @@ tape(function(test) {
         path: [ 'content', 0 ] },
       { operation: 'add',
         path: [ 'content', 0 ],
-        value: { use: 'Purchaser' } } ])
+        value: { use: 'Purchaser' } } ],
+    'replaces term use')
 
   test.same(
     diff(
@@ -31,7 +33,8 @@ tape(function(test) {
         path: [ 'content', 0 ] },
       { operation: 'add',
         path: [ 'content', 0 ],
-        value: { use: 'Buyer' } } ])
+        value: { use: 'Buyer' } } ],
+    'replaces definition')
 
   test.same(
     diff(
@@ -47,6 +50,7 @@ tape(function(test) {
         path: [ 'content', 3] },
       { operation: 'add',
         path: [ 'content', 3 ],
-        value: '.' } ])
+        value: '.' } ],
+    'replaces string with strings and blank')
 
   test.end() })
