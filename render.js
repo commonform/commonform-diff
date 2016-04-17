@@ -28,22 +28,22 @@ function renderForm(path, form, editTree) {
     editTree,
     path.concat('edits'),
     [ ])
-  console.log(editsHere)
   return editsHere
     .reduce(
       function(returned, element) {
         var op = element.op
-        var contentElementIndex = getNth(returned, element.path[0], true)
+        var path = element.path
+        var contentElementIndex = getNth(returned, path[0], true)
         var contentElement = returned[contentElementIndex]
         var splitIndex
         if (op === 'remove') {
-          if (element.path.length === 2) {
-            getNth(contentElement, element.path[1]).del = true }
+          if (path.length === 2) {
+            getNth(contentElement, path[1]).del = true }
           else {
             contentElement.del = true } }
         else if (op === 'add') {
-          if (element.path.length === 2) {
-            splitIndex = getNth(contentElement, element.path[1], true)
+          if (path.length === 2) {
+            splitIndex = getNth(contentElement, path[1], true)
             contentElement.splice(
               splitIndex, 0,
               { text: element.value, ins: true }) }
@@ -51,8 +51,8 @@ function renderForm(path, form, editTree) {
             element.value.ins = true
             returned.splice(contentElementIndex, 0, element.value) } }
         else if (op === 'replace') {
-          if (element.path.length === 2) {
-            splitIndex = getNth(contentElement, element.path[1], true)
+          if (path.length === 2) {
+            splitIndex = getNth(contentElement, path[1], true)
             var split = contentElement[splitIndex]
             split.del = true
             contentElement.splice(
