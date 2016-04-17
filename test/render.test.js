@@ -5,15 +5,15 @@ tape('render', function(test) {
 
   test.same(
     render(
-      { content: [ 'A B C' ] },
-      { content: [ 'A D' ] }),
+      { content: [ 'a b c' ] },
+      { content: [ 'a d' ] }),
     [ { splits:
-          [ { text: 'A' },
+          [ { text: 'a' },
             { text: ' ' },
-            { text: 'B', del: true},
+            { text: 'b', del: true},
             { text: ' ', del: true},
-            { text: 'D', ins: true},
-            { text: 'C', del: true} ] } ])
+            { text: 'd', ins: true},
+            { text: 'c', del: true} ] } ])
 
   test.same(
     render(
@@ -93,5 +93,17 @@ tape('render', function(test) {
             { text: ' ' },
             { text: 'tax' },
             { text: '.' } ] } ])
+
+  test.same(
+    render(
+      { content: [ { form: { content: [ 'a b c' ] } } ] },
+      { content: [ { form: { content: [ 'a d' ]   } } ] }),
+    [ { splits:
+          [ { text: 'a' },
+            { text: ' ' },
+            { text: 'b', del: true},
+            { text: ' ', del: true},
+            { text: 'd', ins: true},
+            { text: 'c', del: true} ] } ])
 
   test.end() })

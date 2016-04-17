@@ -8,26 +8,23 @@ var treeify = require('./treeify-patch')
 
 function render(a, b) {
   var editTree = treeify(diff(a, b, splitStrings))
-  return renderForm([ ], a, editTree.content) }
+  return renderForm(a, editTree) }
 
-function renderForm(path, form, editTree) {
+function renderForm(form, editTree) {
   var original = form.content.reduce(
     function(returned, element, index) {
       if (typeof element === 'string') {
         returned.push(renderText(element))
         return returned }
       else if (element.hasOwnProperty('form')) {
-        var childPath = path.concat(index)
-        var childEditTree = get(editTree, childPath, [ ])
         return returned.concat(
-          renderForm(childPath, element, childEditTree)) }
+          renderForm(
+            element.form,
+            get(editTree, [ 'content', index, 'form' ], [ ]))) }
       else {
         return returned.concat(element) } },
     [ ])
-  var editsHere = get(
-    editTree,
-    path.concat('edits'),
-    [ ])
+  var editsHere = get(editTree, [ 'content', 'edits' ], [ ])
   return editsHere
     .reduce(
       function(returned, element) {
