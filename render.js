@@ -26,8 +26,10 @@ function renderForm(form, editTree) {
     [ ])
   var editsHere = get(editTree, [ 'content', 'edits' ], [ ])
   return editsHere
-    .reduce(
-      function(returned, operation) {
+    .reduce(applyOperation, original) }
+
+
+      function applyOperation(returned, operation) {
         var op = operation.op
         var path = operation.path
         var value = operation.value
@@ -64,8 +66,7 @@ function renderForm(form, editTree) {
             value.ins = true
             contentElement.del = true
             returned.splice(contentElementIndex, 0, value) } }
-        return original },
-      original) }
+        return returned }
 
 function renderText(text) {
   return renderSplits(splitWords(text)) }
