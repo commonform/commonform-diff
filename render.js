@@ -30,6 +30,7 @@ function renderForm(form, editTree) {
       function(returned, operation) {
         var op = operation.op
         var path = operation.path
+        var value = operation.value
         var contentElementIndex = getNth(returned, path[0], true)
         var contentElement = returned[contentElementIndex]
         var splitIndex
@@ -43,26 +44,26 @@ function renderForm(form, editTree) {
             splitIndex = getNth(contentElement.splits, path[1], true)
             contentElement.splits.splice(
               splitIndex, 0,
-              { text: operation.value, ins: true }) }
+              { text: value, ins: true }) }
           else {
-            if (operation.value.hasOwnProperty('splits')) {
-              var rendered = renderSplits(operation.value.splits)
+            if (value.hasOwnProperty('splits')) {
+              var rendered = renderSplits(value.splits)
               rendered.ins = true
               returned.splice(contentElementIndex, 0, rendered) }
             else {
-              operation.value.ins = true
-              returned.splice(contentElementIndex, 0, operation.value) } } }
+              value.ins = true
+              returned.splice(contentElementIndex, 0, value) } } }
         else if (op === 'replace') {
           if (path.length === 2) {
             splitIndex = getNth(contentElement.splits, path[1], true)
             var split = contentElement.splits[splitIndex]
             split.del = true
             contentElement.splits.splice(
-              splitIndex, 0, { text: operation.value, ins: true }) }
+              splitIndex, 0, { text: value, ins: true }) }
           else {
-            operation.value.ins = true
+            value.ins = true
             contentElement.del = true
-            returned.splice(contentElementIndex, 0, operation.value) } }
+            returned.splice(contentElementIndex, 0, value) } }
         return original },
       original) }
 
