@@ -106,4 +106,20 @@ tape('render', function(test) {
             { text: 'd', ins: true},
             { text: 'c', del: true} ] } ])
 
+  test.same(
+    render(
+      { content: [ 'Hello ', { form: { content: [ 'a b c' ] } } ] },
+      { content: [ { form: { content: [ 'a d' ]   } } ] }),
+    [ { splits:
+          [ { text: 'Hello' },
+            { text: ' ' } ],
+        del: true },
+      { splits:
+          [ { text: 'a' },
+            { text: ' ' },
+            { text: 'b', del: true},
+            { text: ' ', del: true},
+            { text: 'd', ins: true},
+            { text: 'c', del: true} ] } ])
+
   test.end() })
