@@ -19,6 +19,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "json-pointer": "^0.5.0",
-    "rfc6902-json-diff": "^0.1.2"
+    "keyarray-get": "^0.1.0",
+    "rfc6902-json-diff": "^0.1.2",
+    "setp": "^1.0.0"
   }
 }

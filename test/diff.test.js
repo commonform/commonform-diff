@@ -7,7 +7,7 @@ tape('diff', function(test) {
     diff(
       { content: [ 'A' ] },
       { content: [ 'B' ] }),
-    [ { action: 'replace',
+    [ { op: 'replace',
         path: '/content/0/splits/0',
         value: 'B' } ])
 
@@ -15,19 +15,19 @@ tape('diff', function(test) {
     diff(
       { content: [ 'A B C' ] },
       { content: [ 'A C' ] }),
-    [ { action: 'remove',
+    [ { op: 'remove',
         path: '/content/0/splits/2' },
-      { action: 'remove',
+      { op: 'remove',
         path: '/content/0/splits/2' } ])
 
   test.same(
     diff(
       { content: [ 'A B C D E' ] },
       { content: [ 'A X C Y E' ] }),
-    [ { action: 'replace',
+    [ { op: 'replace',
         path: '/content/0/splits/2',
         value: 'X' },
-      { action: 'replace',
+      { op: 'replace',
         path: '/content/0/splits/6',
         value: 'Y' } ])
 
@@ -35,11 +35,11 @@ tape('diff', function(test) {
     diff(
       { content: [ 'A B C' ] },
       { content: [ 'A D' ] }),
-    [ { action: 'remove',
+    [ { op: 'remove',
         path: '/content/0/splits/2' },
-      { action: 'remove',
+      { op: 'remove',
         path: '/content/0/splits/2' },
-      { action: 'replace',
+      { op: 'replace',
         path: '/content/0/splits/2',
         value: 'D' } ])
 
