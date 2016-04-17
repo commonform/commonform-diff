@@ -28,6 +28,7 @@ function renderForm(path, form, editTree) {
     editTree,
     path.concat('edits'),
     [ ])
+  console.log(editsHere)
   return editsHere
     .reduce(
       function(returned, element) {
@@ -76,4 +77,5 @@ function getNth(elements, target, returnIndex) {
     if (!element.hasOwnProperty('del')) {
       if (count === target) {
         return ( returnIndex ? index : element ) }
-      count++ } } }
+      count++ } }
+  return ( index + 1 ) }
