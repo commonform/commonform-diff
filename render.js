@@ -28,45 +28,44 @@ function renderForm(form, editTree) {
   return editsHere
     .reduce(applyOperation, original) }
 
-
-      function applyOperation(returned, operation) {
-        var op = operation.op
-        var path = operation.path
-        var value = operation.value
-        var contentElementIndex = getNth(returned, path[0], true)
-        var contentElement = returned[contentElementIndex]
-        var splitIndex
-        if (op === 'remove') {
-          if (path.length === 2) {
-            getNth(contentElement.splits, path[1]).del = true }
-          else {
-            contentElement.del = true } }
-        else if (op === 'add') {
-          if (path.length === 2) {
-            splitIndex = getNth(contentElement.splits, path[1], true)
-            contentElement.splits.splice(
-              splitIndex, 0,
-              { text: value, ins: true }) }
-          else {
-            if (value.hasOwnProperty('splits')) {
-              var rendered = renderSplits(value.splits)
-              rendered.ins = true
-              returned.splice(contentElementIndex, 0, rendered) }
-            else {
-              value.ins = true
-              returned.splice(contentElementIndex, 0, value) } } }
-        else if (op === 'replace') {
-          if (path.length === 2) {
-            splitIndex = getNth(contentElement.splits, path[1], true)
-            var split = contentElement.splits[splitIndex]
-            split.del = true
-            contentElement.splits.splice(
-              splitIndex, 0, { text: value, ins: true }) }
-          else {
-            value.ins = true
-            contentElement.del = true
-            returned.splice(contentElementIndex, 0, value) } }
-        return returned }
+function applyOperation(returned, operation) {
+  var op = operation.op
+  var path = operation.path
+  var value = operation.value
+  var contentElementIndex = getNth(returned, path[0], true)
+  var contentElement = returned[contentElementIndex]
+  var splitIndex
+  if (op === 'remove') {
+    if (path.length === 2) {
+      getNth(contentElement.splits, path[1]).del = true }
+    else {
+      contentElement.del = true } }
+  else if (op === 'add') {
+    if (path.length === 2) {
+      splitIndex = getNth(contentElement.splits, path[1], true)
+      contentElement.splits.splice(
+        splitIndex, 0,
+        { text: value, ins: true }) }
+    else {
+      if (value.hasOwnProperty('splits')) {
+        var rendered = renderSplits(value.splits)
+        rendered.ins = true
+        returned.splice(contentElementIndex, 0, rendered) }
+      else {
+        value.ins = true
+        returned.splice(contentElementIndex, 0, value) } } }
+  else if (op === 'replace') {
+    if (path.length === 2) {
+      splitIndex = getNth(contentElement.splits, path[1], true)
+      var split = contentElement.splits[splitIndex]
+      split.del = true
+      contentElement.splits.splice(
+        splitIndex, 0, { text: value, ins: true }) }
+    else {
+      value.ins = true
+      contentElement.del = true
+      returned.splice(contentElementIndex, 0, value) } }
+  return returned }
 
 function renderText(text) {
   return renderSplits(splitWords(text)) }
