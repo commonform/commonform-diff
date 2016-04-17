@@ -22,7 +22,7 @@ function renderForm(path, form, editTree) {
         return returned.concat(
           renderForm(childPath, element, childEditTree)) }
       else {
-        return returned.concat({ text: element }) } },
+        return returned.concat(element) } },
     [ ])
   var editsHere = get(
     editTree,
