@@ -69,7 +69,7 @@ function renderForm(path, form, editTree) {
         return original },
       original) }
 
-function renderText(text, edits) {
+function renderText(text) {
   return renderSplits(splitWords(text)) }
 
 function renderSplits(splits) {
