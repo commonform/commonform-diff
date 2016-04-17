@@ -55,8 +55,8 @@ tape('render', function(test) {
       { content: [ { use: 'Seller' } , ' shall pay all tax.' ] },
       { content: [ 'The ', { use: 'Buyer' } , ' shall pay no tax.' ] }),
     [ { splits:
-          [ { text: 'The', ins: true },
-            { text: ' ', ins: true } ],
+          [ { text: 'The' },
+            { text: ' ' } ],
         ins: true },
       { use: 'Buyer', ins: true },
       { use: 'Seller', del: true },
@@ -68,6 +68,28 @@ tape('render', function(test) {
             { text: ' ' },
             { text: 'no', ins: true },
             { text: 'all', del: true},
+            { text: ' ' },
+            { text: 'tax' },
+            { text: '.' } ] } ])
+
+  test.same(
+    render(
+      { content: [ 'The ', { use: 'Buyer' } , ' shall pay no tax.' ] },
+      { content: [ { use: 'Seller' } , ' shall pay all tax.' ] }),
+    [ { splits:
+          [ { text: 'The' },
+            { text: ' ' } ],
+        del: true },
+      { use: 'Seller', ins: true },
+      { use: 'Buyer', del: true },
+      { splits:
+          [ { text: ' ' },
+            { text: 'shall' },
+            { text: ' ' },
+            { text: 'pay' },
+            { text: ' ' },
+            { text: 'all', ins: true},
+            { text: 'no', del: true },
             { text: ' ' },
             { text: 'tax' },
             { text: '.' } ] } ])

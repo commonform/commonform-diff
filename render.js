@@ -51,7 +51,6 @@ function renderForm(path, form, editTree) {
             if (element.value.hasOwnProperty('splits')) {
               var rendered = renderSplits(element.value.splits)
               rendered.ins = true
-              rendered.splits.forEach(function(split) { split.ins = true })
               returned.splice(contentElementIndex, 0, rendered) }
             else {
               element.value.ins = true
