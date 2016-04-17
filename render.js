@@ -38,24 +38,30 @@ function renderForm(path, form, editTree) {
         var splitIndex
         if (op === 'remove') {
           if (path.length === 2) {
-            getNth(contentElement, path[1]).del = true }
+            getNth(contentElement.splits, path[1]).del = true }
           else {
             contentElement.del = true } }
         else if (op === 'add') {
           if (path.length === 2) {
-            splitIndex = getNth(contentElement, path[1], true)
-            contentElement.splice(
+            splitIndex = getNth(contentElement.splits, path[1], true)
+            contentElement.splits.splice(
               splitIndex, 0,
               { text: element.value, ins: true }) }
           else {
-            element.value.ins = true
-            returned.splice(contentElementIndex, 0, element.value) } }
+            if (element.value.hasOwnProperty('splits')) {
+              var rendered = renderSplits(element.value.splits)
+              rendered.ins = true
+              rendered.splits.forEach(function(split) { split.ins = true })
+              returned.splice(contentElementIndex, 0, rendered) }
+            else {
+              element.value.ins = true
+              returned.splice(contentElementIndex, 0, element.value) } } }
         else if (op === 'replace') {
           if (path.length === 2) {
-            splitIndex = getNth(contentElement, path[1], true)
-            var split = contentElement[splitIndex]
+            splitIndex = getNth(contentElement.splits, path[1], true)
+            var split = contentElement.splits[splitIndex]
             split.del = true
-            contentElement.splice(
+            contentElement.splits.splice(
               splitIndex, 0, { text: element.value, ins: true }) }
           else {
             element.value.ins = true
@@ -65,9 +71,12 @@ function renderForm(path, form, editTree) {
       original) }
 
 function renderText(text, edits) {
-  var splits = splitWords(text)
-  return splits.map(function(split) {
-    return { text: split } }) }
+  return renderSplits(splitWords(text)) }
+
+function renderSplits(splits) {
+  return {
+    splits: splits.map(function(split) {
+      return { text: split } }) } }
 
 function getNth(elements, target, returnIndex) {
   var length = elements.length
