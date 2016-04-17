@@ -27,9 +27,9 @@ function renderForm(form, editTree) {
   var editsHere = get(editTree, [ 'content', 'edits' ], [ ])
   return editsHere
     .reduce(
-      function(returned, element) {
-        var op = element.op
-        var path = element.path
+      function(returned, operation) {
+        var op = operation.op
+        var path = operation.path
         var contentElementIndex = getNth(returned, path[0], true)
         var contentElement = returned[contentElementIndex]
         var splitIndex
@@ -43,26 +43,26 @@ function renderForm(form, editTree) {
             splitIndex = getNth(contentElement.splits, path[1], true)
             contentElement.splits.splice(
               splitIndex, 0,
-              { text: element.value, ins: true }) }
+              { text: operation.value, ins: true }) }
           else {
-            if (element.value.hasOwnProperty('splits')) {
-              var rendered = renderSplits(element.value.splits)
+            if (operation.value.hasOwnProperty('splits')) {
+              var rendered = renderSplits(operation.value.splits)
               rendered.ins = true
               returned.splice(contentElementIndex, 0, rendered) }
             else {
-              element.value.ins = true
-              returned.splice(contentElementIndex, 0, element.value) } } }
+              operation.value.ins = true
+              returned.splice(contentElementIndex, 0, operation.value) } } }
         else if (op === 'replace') {
           if (path.length === 2) {
             splitIndex = getNth(contentElement.splits, path[1], true)
             var split = contentElement.splits[splitIndex]
             split.del = true
             contentElement.splits.splice(
-              splitIndex, 0, { text: element.value, ins: true }) }
+              splitIndex, 0, { text: operation.value, ins: true }) }
           else {
-            element.value.ins = true
+            operation.value.ins = true
             contentElement.del = true
-            returned.splice(contentElementIndex, 0, element.value) } }
+            returned.splice(contentElementIndex, 0, operation.value) } }
         return original },
       original) }
 
