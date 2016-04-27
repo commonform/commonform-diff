@@ -13,8 +13,8 @@ tape('render', function(test) {
             { text: ' ' },
             { text: 'b', del: true},
             { text: ' ', del: true},
-            { text: 'd', ins: true},
-            { text: 'c', del: true} ] } ])
+            { text: 'c', del: true},
+            { text: 'd', ins: true} ] } ])
 
   test.same(
     render(
@@ -47,8 +47,8 @@ tape('render', function(test) {
       { content: [ { use: 'Seller' } , ' pays.' ] },
       { content: [ { use: 'Buyer' } , ' pays.' ] })
       .content,
-    [ { use: 'Buyer', ins: true },
-      { use: 'Seller', del: true },
+    [ { use: 'Seller', del: true },
+      { use: 'Buyer', ins: true },
       { splits:
           [ { text: ' ' },
             { text: 'pays' },
@@ -63,16 +63,16 @@ tape('render', function(test) {
           [ { text: 'The' },
             { text: ' ' } ],
         ins: true },
-      { use: 'Buyer', ins: true },
       { use: 'Seller', del: true },
+      { use: 'Buyer', ins: true },
       { splits:
           [ { text: ' ' },
             { text: 'shall' },
             { text: ' ' },
             { text: 'pay' },
             { text: ' ' },
-            { text: 'no', ins: true },
             { text: 'all', del: true},
+            { text: 'no', ins: true },
             { text: ' ' },
             { text: 'tax' },
             { text: '.' } ] } ])
@@ -86,16 +86,16 @@ tape('render', function(test) {
           [ { text: 'The' },
             { text: ' ' } ],
         del: true },
-      { use: 'Seller', ins: true },
       { use: 'Buyer', del: true },
+      { use: 'Seller', ins: true },
       { splits:
           [ { text: ' ' },
             { text: 'shall' },
             { text: ' ' },
             { text: 'pay' },
             { text: ' ' },
-            { text: 'all', ins: true},
             { text: 'no', del: true },
+            { text: 'all', ins: true},
             { text: ' ' },
             { text: 'tax' },
             { text: '.' } ] } ])
@@ -112,8 +112,21 @@ tape('render', function(test) {
                     { text: ' ' },
                     { text: 'b', del: true },
                     { text: ' ', del: true },
-                    { text: 'd', ins: true },
-                    { text: 'c', del: true } ] } ] } } ])
+                    { text: 'c', del: true },
+                    { text: 'd', ins: true } ] } ] } } ])
+
+  test.same(
+    render(
+      { content: [ 'a b c' ] },
+      { content: [ 'a x c' ] })
+      .content,
+    [ { splits:
+        [ { text: 'a' },
+          { text: ' ' },
+          { text: 'b', del: true },
+          { text: 'x', ins: true },
+          { text: ' ' },
+          { text: 'c' } ] } ])
 
   test.same(
     render(
@@ -131,7 +144,7 @@ tape('render', function(test) {
                       { text: ' ' },
                       { text: 'b', del: true },
                       { text: ' ', del: true },
-                      { text: 'd', ins: true },
-                      { text: 'c', del: true } ] } ] } } ])
+                      { text: 'c', del: true },
+                      { text: 'd', ins: true } ] } ] } } ])
 
   test.end() })

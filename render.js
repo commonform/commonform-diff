@@ -33,7 +33,7 @@ function render(a, b) {
       targetIndex = getNth(containingArray, path[path.length - 1])
       containingArray[targetIndex].del = true
       value.ins = true
-      containingArray.splice(targetIndex, 0, value) } })
+      containingArray.splice(( targetIndex + 1 ), 0, value) } })
   return clone }
 
 function get(object, path) {
