@@ -11,10 +11,10 @@ tape('render', function(test) {
     [ { splits:
           [ { text: 'a' },
             { text: ' ' },
-            { text: 'b', del: true},
-            { text: ' ', del: true},
-            { text: 'c', del: true},
-            { text: 'd', ins: true} ] } ])
+            { text: 'b', del: true },
+            { text: ' ', del: true },
+            { text: 'c', del: true },
+            { text: 'd', ins: true } ] } ])
 
   test.same(
     render(
@@ -24,8 +24,8 @@ tape('render', function(test) {
     [ { splits:
           [ { text: 'A' },
             { text: ' ' },
-            { text: 'B', del: true},
-            { text: ' ', del: true},
+            { text: 'B', del: true },
+            { text: ' ', del: true },
             { text: 'C' } ] } ])
 
   test.same(
@@ -71,7 +71,7 @@ tape('render', function(test) {
             { text: ' ' },
             { text: 'pay' },
             { text: ' ' },
-            { text: 'all', del: true},
+            { text: 'all', del: true },
             { text: 'no', ins: true },
             { text: ' ' },
             { text: 'tax' },
@@ -95,7 +95,7 @@ tape('render', function(test) {
             { text: 'pay' },
             { text: ' ' },
             { text: 'no', del: true },
-            { text: 'all', ins: true},
+            { text: 'all', ins: true },
             { text: ' ' },
             { text: 'tax' },
             { text: '.' } ] } ])
