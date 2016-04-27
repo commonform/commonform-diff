@@ -4,7 +4,7 @@ var diff = require('rfc6902-json-diff')
 var defaultSplit = require('./split-strings')
 var pointer = require('json-pointer')
 
-var promotable = [ 'use', 'definition', 'reference' ]
+var promotable = [ 'use', 'definition', 'reference', 'text' ]
 
 function commonformdiff(a, b, split) {
   if (split === undefined) {

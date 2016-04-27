@@ -9,7 +9,9 @@ function splitStrings(argument) {
       function(content, element) {
         if (typeof element === 'string') {
           return content.concat(
-            { splits: splitWords(element) }) }
+            { splits: splitWords(element)
+                .map(function(string) {
+                  return { text: string } }) }) }
         else if (element.hasOwnProperty('form')) {
           var child = { }
           if (element.hasOwnProperty('heading')) {

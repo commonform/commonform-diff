@@ -9,7 +9,7 @@ tape('diff', function(test) {
       { content: [ 'B' ] }),
     [ { op: 'replace',
         path: '/content/0/splits/0',
-        value: 'B' } ])
+        value: { text: 'B' } } ])
 
   test.same(
     diff(
@@ -26,10 +26,10 @@ tape('diff', function(test) {
       { content: [ 'A X C Y E' ] }),
     [ { op: 'replace',
         path: '/content/0/splits/2',
-        value: 'X' },
+        value: { text: 'X' } },
       { op: 'replace',
         path: '/content/0/splits/6',
-        value: 'Y' } ])
+        value: { text: 'Y' } } ])
 
   test.same(
     diff(
@@ -41,6 +41,6 @@ tape('diff', function(test) {
         path: '/content/0/splits/2' },
       { op: 'replace',
         path: '/content/0/splits/2',
-        value: 'D' } ])
+        value: { text: 'D' } } ])
 
   test.end() })
