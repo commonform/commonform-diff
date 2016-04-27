@@ -6,7 +6,8 @@ tape('render', function(test) {
   test.same(
     render(
       { content: [ 'a b c' ] },
-      { content: [ 'a d' ] }),
+      { content: [ 'a d' ] })
+      .content,
     [ { splits:
           [ { text: 'a' },
             { text: ' ' },
@@ -18,7 +19,8 @@ tape('render', function(test) {
   test.same(
     render(
       { content: [ 'A B C' ] },
-      { content: [ 'A C' ] }),
+      { content: [ 'A C' ] })
+      .content,
     [ { splits:
           [ { text: 'A' },
             { text: ' ' },
@@ -29,7 +31,8 @@ tape('render', function(test) {
   test.same(
     render(
       { content: [ 'A B C' ] },
-      { content: [ 'A B C D' ] }),
+      { content: [ 'A B C D' ] })
+      .content,
     [ { splits:
           [ { text: 'A' },
             { text: ' ' },
@@ -42,7 +45,8 @@ tape('render', function(test) {
   test.same(
     render(
       { content: [ { use: 'Seller' } , ' pays.' ] },
-      { content: [ { use: 'Buyer' } , ' pays.' ] }),
+      { content: [ { use: 'Buyer' } , ' pays.' ] })
+      .content,
     [ { use: 'Buyer', ins: true },
       { use: 'Seller', del: true },
       { splits:
@@ -53,7 +57,8 @@ tape('render', function(test) {
   test.same(
     render(
       { content: [ { use: 'Seller' } , ' shall pay all tax.' ] },
-      { content: [ 'The ', { use: 'Buyer' } , ' shall pay no tax.' ] }),
+      { content: [ 'The ', { use: 'Buyer' } , ' shall pay no tax.' ] })
+      .content,
     [ { splits:
           [ { text: 'The' },
             { text: ' ' } ],
@@ -75,7 +80,8 @@ tape('render', function(test) {
   test.same(
     render(
       { content: [ 'The ', { use: 'Buyer' } , ' shall pay no tax.' ] },
-      { content: [ { use: 'Seller' } , ' shall pay all tax.' ] }),
+      { content: [ { use: 'Seller' } , ' shall pay all tax.' ] })
+      .content,
     [ { splits:
           [ { text: 'The' },
             { text: ' ' } ],
@@ -97,7 +103,8 @@ tape('render', function(test) {
   test.same(
     render(
       { content: [ { form: { content: [ 'a b c' ] } } ] },
-      { content: [ { form: { content: [ 'a d' ]   } } ] }),
+      { content: [ { form: { content: [ 'a d' ]   } } ] })
+      .content,
     [ { form:
           { content:
               [ { splits:
@@ -111,7 +118,8 @@ tape('render', function(test) {
   test.same(
     render(
       { content: [ 'Hello ', { form: { content: [ 'a b c' ] } } ] },
-      { content: [ { form: { content: [ 'a d' ]   } } ] }),
+      { content: [ { form: { content: [ 'a d' ]   } } ] })
+      .content,
     [ { splits:
           [ { text: 'Hello' },
             { text: ' ' } ],

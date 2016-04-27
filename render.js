@@ -34,7 +34,7 @@ function render(a, b) {
       containingArray[targetIndex].del = true
       value.ins = true
       containingArray.splice(targetIndex, 0, value) } })
-  return clone.content }
+  return clone }
 
 function get(object, path) {
   if (path.length === 0) {
