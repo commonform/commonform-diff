@@ -31,7 +31,7 @@ function renderForm(form, editTree) {
       else {
         return returned.concat(element) } },
     [ ])
-  // Find edits to be applied to the contnet elements of this form.
+  // Find edits to be applied to the content elements of this form.
   var editsHere = get(editTree, [ 'content', 'edits' ], [ ])
   // Apply the operations to the rendered content elements.
   return editsHere.reduce(applyOperation, original) }
@@ -42,7 +42,7 @@ function applyOperation(returned, operation) {
   var value = operation.value
   // Find the index of the element to which the operation applies.
   var contentElementIndex = getNth(returned, path[0])
-  // Find the lement itself.
+  // Find the element itself.
   var contentElement = returned[contentElementIndex]
   // If the path has a second key element, it refers to a split within a string
   // content element.
@@ -89,7 +89,7 @@ function renderSplits(splits) {
     splits: splits.map(function(split) {
       return { text: split } }) } }
 
-// Return the array index of the nth contnet element that has _not_ been marked
+// Return the array index of the nth content element that has _not_ been marked
 // for deletion with `{ del: true }`.
 function getNth(elements, target) {
   var length = elements.length
