@@ -98,13 +98,15 @@ tape('render', function(test) {
     render(
       { content: [ { form: { content: [ 'a b c' ] } } ] },
       { content: [ { form: { content: [ 'a d' ]   } } ] }),
-    [ { splits:
-          [ { text: 'a' },
-            { text: ' ' },
-            { text: 'b', del: true},
-            { text: ' ', del: true},
-            { text: 'd', ins: true},
-            { text: 'c', del: true} ] } ])
+    [ { form:
+          { content:
+              [ { splits:
+                  [ { text: 'a' },
+                    { text: ' ' },
+                    { text: 'b', del: true },
+                    { text: ' ', del: true },
+                    { text: 'd', ins: true },
+                    { text: 'c', del: true } ] } ] } } ])
 
   test.same(
     render(
@@ -114,12 +116,14 @@ tape('render', function(test) {
           [ { text: 'Hello' },
             { text: ' ' } ],
         del: true },
-      { splits:
-          [ { text: 'a' },
-            { text: ' ' },
-            { text: 'b', del: true},
-            { text: ' ', del: true},
-            { text: 'd', ins: true},
-            { text: 'c', del: true} ] } ])
+      { form:
+          { content:
+              [ { splits:
+                    [ { text: 'a' },
+                      { text: ' ' },
+                      { text: 'b', del: true },
+                      { text: ' ', del: true },
+                      { text: 'd', ins: true },
+                      { text: 'c', del: true } ] } ] } } ])
 
   test.end() })
