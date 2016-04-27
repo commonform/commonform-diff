@@ -1,41 +1,50 @@
 module.exports = render
 
 var diff = require('./')
-var splitStrings = require('./split-strings')
 var pointer = require('json-pointer')
+var splitStrings = require('./split-strings')
 
+// A string of digits.
 var INT_RE = /^\d+$/
 
 // Render a, showing edits from b.
 function render(a, b) {
-  var splitA = splitStrings(a)
-  var splitB = splitStrings(b)
-  var patch = diff(splitA, splitB, splitStrings)
-  var clone = JSON.parse(JSON.stringify(splitA))
+  var patch = diff(a, b, splitStrings)
+  // Apply the patch operations to a clone of `a`.
+  var clone = JSON.parse(JSON.stringify(splitStrings(a)))
   patch.forEach(function(operation) {
     var op = operation.op
     var path = pointer
+      // Parse the JSON Pointer path.
       .parse(operation.path)
+      // Convert string keys to numeric indices.
       .map(function(key) {
         return ( INT_RE.test(key) ? parseInt(key) : key ) })
-    var value = operation.value
-    var containingArray
-    var targetIndex
     if (op === 'remove') {
+      // Mark deleted.
       get(clone, path).del = true }
-    else if (op === 'add') {
-      containingArray = get(clone, path.slice(0, -1))
-      targetIndex = getNth(containingArray, path[path.length - 1])
+    else {
+      var containingArray
+      var targetIndex
+      var value = operation.value
+      // Mark the new value as inserted.
       value.ins = true
-      containingArray.splice(targetIndex, 0, value) }
-    else if (op === 'replace') {
+      // Find the array that contains the change.
       containingArray = get(clone, path.slice(0, -1))
+      // Find the index of the element changed.
       targetIndex = getNth(containingArray, path[path.length - 1])
-      containingArray[targetIndex].del = true
-      value.ins = true
-      containingArray.splice(( targetIndex + 1 ), 0, value) } })
+      if (op === 'add') {
+        containingArray.splice(targetIndex, 0, value) }
+      else if (op === 'replace') {
+        // Mark the replaced element deleted.
+        containingArray[targetIndex].del = true
+        // Splice the replacement value in _after_ the replaced value.
+        var afterTargetIndex = ( targetIndex + 1 )
+        containingArray.splice(afterTargetIndex, 0, value) } } })
   return clone }
 
+// Get a value from a nested data structure, using `getNth`, rather than
+// `array[index]`, to resolve array indices.
 function get(object, path) {
   if (path.length === 0) {
     return object }
