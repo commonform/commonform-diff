@@ -22,9 +22,4 @@ function commonformdiff(a, b, split) {
           op: op,
           path: pointer.compile(path.slice(0, -1)),
           value: newValue } }
-      // else if (op === 'add' && value.hasOwnProperty('splits')) {
-      //   return {
-      //     op: op,
-      //     path: operation.path,
-      //     value: value.splits } }
       return operation })}
