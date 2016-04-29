@@ -147,4 +147,46 @@ tape('render', function(test) {
                       { text: 'c', del: true },
                       { text: 'd', ins: true } ] } ] } } ])
 
+  test.same(
+    render(
+      { content: [ 'This is just a test.' ] },
+      { content: [ 'This is an important provision.' ] })
+      .content,
+    [ { splits:
+          [ { text: 'This' },
+            { text: ' ' },
+            { text: 'is' },
+            { text: ' ' },
+            { text: 'just', del: true },
+            { text: ' ', del: true },
+            { text: 'a', del: true },
+            { text: ' ', del: true },
+            { text: 'test', del: true },
+            { text: 'an', ins: true },
+            { text: ' ', ins: true },
+            { text: 'important', ins: true },
+            { text: ' ', ins: true },
+            { text: 'provision', ins: true },
+            { text: '.' } ] } ])
+
+  test.same(
+    render(
+      { content: [ 'The ', { use: 'Buyer' }, ' pays all tax.' ] },
+      { content: [ 'The ', { use: 'Seller' }, ' withholds all tax.' ] })
+      .content,
+    [ { splits:
+          [ { text: 'The' },
+            { text: ' ' } ] },
+      { use: 'Buyer', del: true },
+      { use: 'Seller', ins: true },
+      { splits:
+          [ { text: ' ' },
+            { text: 'pays', del: true },
+            { text: 'withholds', ins: true },
+            { text: ' ' },
+            { text: 'all' },
+            { text: ' ' },
+            { text: 'tax' },
+            { text: '.' } ] } ])
+
   test.end() })
