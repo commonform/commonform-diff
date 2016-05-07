@@ -19,7 +19,7 @@ var destringify = require('./destringify')
 var destringifyForm = require('./destringify-form')
 var diff = require('./diff')
 var pointer = require('json-pointer')
-var splitStrings = require('./split-strings')
+var stringifyForm = require('./stringify-form')
 var stack = require('./stack')
 
 // A string of digits.
@@ -33,7 +33,7 @@ function commonformdiff(a, b) {
         operation.value = destringify(operation.value) }
       return operation })
   // Apply the patch operations to a clone of `a`.
-  var clone = JSON.parse(JSON.stringify(splitStrings(a)))
+  var clone = JSON.parse(JSON.stringify(stringifyForm(a)))
   destringifyForm(clone)
   patch.forEach(function(operation) {
     var op = operation.op

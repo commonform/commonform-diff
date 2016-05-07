@@ -13,12 +13,12 @@
  * limitations under the License.
  */
 
-module.exports = splitStrings
+module.exports = stringifyForm
 
 var splitWords = require('./split-words')
 var stringify = require('./stringify')
 
-function splitStrings(argument) {
+function stringifyForm(argument) {
   var returned = { }
   returned.content = argument.content
     .reduce(
@@ -40,7 +40,7 @@ function splitStrings(argument) {
                 element.hasOwnProperty('conspicuous')
                   ? [ stringify('w', element.conspicuous) ]
                   : [ ] ),
-              form: splitStrings(element.form) }
+              form: stringifyForm(element.form) }
           return content.concat(child) }
         else {
           var stringified

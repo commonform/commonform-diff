@@ -16,13 +16,13 @@
 module.exports = commonformdiff
 
 var diff = require('rfc6902-json-diff')
-var split = require('./split-strings')
+var stringifyForm = require('./stringify-form')
 var pointer = require('json-pointer')
 
 var promotableKeys = [ 'use', 'definition', 'reference', 'word' ]
 
 function commonformdiff(a, b) {
-  return diff(split(a), split(b))
+  return diff(stringifyForm(a), stringifyForm(b))
     .map(function promoteEdits(operation) {
       var op = operation.op
       var path = pointer.parse(operation.path)
