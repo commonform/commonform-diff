@@ -11,10 +11,14 @@
     "index.js"
   ],
   "devDependencies": {
+    "defence-cli": "^2.0.0",
+    "replace-require-self": "^1.1.1",
     "tape": "^4.4.0"
   },
   "scripts": {
-    "test": "tape test/*.test.js"
+    "test:readme": "defence README.md | replace-require-self | node",
+    "test:tape": "tape test/*.test.js",
+    "test": "npm run test:tape && npm run test:readme"
   },
   "license": "Apache-2.0",
   "dependencies": {
