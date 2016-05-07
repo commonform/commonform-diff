@@ -42,6 +42,8 @@ instead of:
 
 > The <ins>Seller</ins><del>Buyer</del> shall ...
 
+A few simple examples:
+
 ```javascript
 assert.deepEqual(
   diff(
@@ -163,7 +165,11 @@ assert.deepEqual(
               { word: ' ', deleted: true  },
               { word: 'c', deleted: true  },
               { word: 'd', inserted: true } ] } } ])
+```
 
+A few edit stacking examples:
+
+```javascript
 assert.deepEqual(
   diff(
     { content: [ 'This is just a test.'            ] },
@@ -206,6 +212,28 @@ assert.deepEqual(
 
 assert.deepEqual(
   diff(
+    { content: [ 'a b c d' ] },
+    { content: [ 'a x y z' ] })
+    .content,
+  [ { word: 'a'                 },
+    { word: ' '                 },
+    { word: 'b', deleted: true  },
+    { word: ' ', deleted: true  },
+    { word: 'c', deleted: true  },
+    { word: ' ', deleted: true  },
+    { word: 'd', deleted: true  },
+    { word: 'x', inserted: true },
+    { word: ' ', inserted: true },
+    { word: 'y', inserted: true },
+    { word: ' ', inserted: true },
+    { word: 'z', inserted: true } ])
+```
+
+Changes to child form headings:
+
+```javascript
+assert.deepEqual(
+  diff(
     { content: [ { heading: 'List of Words', form: { content: [ 'a b c' ] } } ] },
     { content: [ { heading: 'List of Items', form: { content: [ 'a b c' ] } } ] })
     .content,
@@ -227,24 +255,6 @@ assert.deepEqual(
 
 assert.deepEqual(
   diff(
-    { content: [ 'a b c d' ] },
-    { content: [ 'a x y z' ] })
-    .content,
-  [ { word: 'a'                 },
-    { word: ' '                 },
-    { word: 'b', deleted: true  },
-    { word: ' ', deleted: true  },
-    { word: 'c', deleted: true  },
-    { word: ' ', deleted: true  },
-    { word: 'd', deleted: true  },
-    { word: 'x', inserted: true },
-    { word: ' ', inserted: true },
-    { word: 'y', inserted: true },
-    { word: ' ', inserted: true },
-    { word: 'z', inserted: true } ])
-
-assert.deepEqual(
-  diff(
     { content: [ { heading: 'x', form: { content: [ 'a' ] } } ] },
     { content: [ {               form: { content: [ 'a' ] } } ] })
     .content,
@@ -262,7 +272,11 @@ assert.deepEqual(
       form:
         { conspicuous: [ ],
           content: [ { word: 'a' } ] } } ])
+```
 
+Changes to form conspicuous presentation flags:
+
+```javascript
 assert.deepEqual(
   diff(
     { content: [ { form: {                     content: [ 'a' ] } } ] },
@@ -281,5 +295,5 @@ assert.deepEqual(
   [ { heading: [ ],
       form:
         { conspicuous: [ { word: 'yes', deleted: true } ],
-        content: [ { word: 'a' } ] } } ])
+          content: [ { word: 'a' } ] } } ])
 ```
