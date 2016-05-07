@@ -35,8 +35,12 @@ function splitStrings(argument) {
                   ? splitWords(element.heading)
                       .map(function(word) {
                         return stringify('w', word) })
-                  : [ ] ) }
-          child.form = splitStrings(element.form)
+                  : [ ] ),
+              conspicuous: (
+                element.hasOwnProperty('conspicuous')
+                  ? [ stringify('w', element.conspicuous) ]
+                  : [ ] ),
+              form: splitStrings(element.form) }
           return content.concat(child) }
         else {
           var stringified
