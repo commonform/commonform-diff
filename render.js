@@ -27,13 +27,13 @@ function render(a, b) {
         return ( INT_RE.test(key) ? parseInt(key) : key ) })
     if (op === 'remove') {
       // Mark deleted.
-      get(clone, path).del = true }
+      get(clone, path).deleted = true }
     else {
       var containingArray
       var targetIndex
       var value = operation.value
       // Mark the new value as inserted.
-      value.ins = true
+      value.inserted = true
       // Find the array that contains the change.
       containingArray = get(clone, path.slice(0, -1))
       // Find the index of the element changed.
@@ -42,7 +42,7 @@ function render(a, b) {
         containingArray.splice(targetIndex, 0, value) }
       else if (op === 'replace') {
         // Mark the replaced element deleted.
-        containingArray[targetIndex].del = true
+        containingArray[targetIndex].deleted = true
         // Splice the replacement value in _after_ the replaced value.
         var afterTargetIndex = ( targetIndex + 1 )
         containingArray.splice(afterTargetIndex, 0, value) } } })
@@ -62,13 +62,13 @@ function get(object, path) {
       return get(object[key], path) } } }
 
 // Return the array index of the nth content element that has _not_ been marked
-// for deletion with `{ del: true }`.
+// for deletion with `{ deleted: true }`.
 function getNth(elements, target) {
   var length = elements.length
   var count = 0
   for (var index = 0; index < length; index++) {
     var element = elements[index]
-    if (!element.hasOwnProperty('del')) {
+    if (!element.hasOwnProperty('deleted')) {
       if (count === target) {
         return index }
       count++ } }

@@ -10,10 +10,10 @@ tape('render', function(test) {
       .content,
     [ { word: 'a' },
       { word: ' ' },
-      { word: 'b', del: true },
-      { word: ' ', del: true },
-      { word: 'c', del: true },
-      { word: 'd', ins: true } ])
+      { word: 'b', deleted: true },
+      { word: ' ', deleted: true },
+      { word: 'c', deleted: true },
+      { word: 'd', inserted: true } ])
 
   test.same(
     render(
@@ -22,8 +22,8 @@ tape('render', function(test) {
       .content,
     [ { word: 'A' },
       { word: ' ' },
-      { word: 'B', del: true },
-      { word: ' ', del: true },
+      { word: 'B', deleted: true },
+      { word: ' ', deleted: true },
       { word: 'C' } ])
 
   test.same(
@@ -36,16 +36,16 @@ tape('render', function(test) {
       { word: 'B' },
       { word: ' ' },
       { word: 'C' },
-      { word: ' ', ins: true },
-      { word: 'D', ins: true } ])
+      { word: ' ', inserted: true },
+      { word: 'D', inserted: true } ])
 
   test.same(
     render(
       { content: [ { use: 'Seller' } , ' pays.' ] },
       { content: [ { use: 'Buyer' } , ' pays.' ] })
       .content,
-    [ { use: 'Seller', del: true },
-      { use: 'Buyer', ins: true },
+    [ { use: 'Seller', deleted: true },
+      { use: 'Buyer', inserted: true },
       { word: ' ' },
       { word: 'pays' },
       { word: '.' } ])
@@ -55,17 +55,17 @@ tape('render', function(test) {
       { content: [ { use: 'Seller' } , ' shall pay all tax.' ] },
       { content: [ 'The ', { use: 'Buyer' } , ' shall pay no tax.' ] })
       .content,
-    [ { use: 'Seller', del: true },
-      { word: 'The', ins: true },
+    [ { use: 'Seller', deleted: true },
+      { word: 'The', inserted: true },
       { word: ' ' },
-      { use: 'Buyer', ins: true },
-      { word: ' ', ins: true },
+      { use: 'Buyer', inserted: true },
+      { word: ' ', inserted: true },
       { word: 'shall' },
       { word: ' ' },
       { word: 'pay' },
       { word: ' ' },
-      { word: 'all', del: true },
-      { word: 'no', ins: true },
+      { word: 'all', deleted: true },
+      { word: 'no', inserted: true },
       { word: ' ' },
       { word: 'tax' },
       { word: '.' } ])
@@ -75,17 +75,17 @@ tape('render', function(test) {
       { content: [ 'The ', { use: 'Buyer' } , ' shall pay no tax.' ] },
       { content: [ { use: 'Seller' } , ' shall pay all tax.' ] })
       .content,
-    [ { word: 'The', del: true },
-      { use: 'Seller', ins: true },
+    [ { word: 'The', deleted: true },
+      { use: 'Seller', inserted: true },
       { word: ' ' },
-      { use: 'Buyer', del: true },
-      { word: ' ', del: true },
+      { use: 'Buyer', deleted: true },
+      { word: ' ', deleted: true },
       { word: 'shall' },
       { word: ' ' },
       { word: 'pay' },
       { word: ' ' },
-      { word: 'no', del: true },
-      { word: 'all', ins: true },
+      { word: 'no', deleted: true },
+      { word: 'all', inserted: true },
       { word: ' ' },
       { word: 'tax' },
       { word: '.' } ])
@@ -99,10 +99,10 @@ tape('render', function(test) {
           { content:
               [ { word: 'a' },
                 { word: ' ' },
-                { word: 'b', del: true },
-                { word: ' ', del: true },
-                { word: 'c', del: true },
-                { word: 'd', ins: true } ] } } ])
+                { word: 'b', deleted: true },
+                { word: ' ', deleted: true },
+                { word: 'c', deleted: true },
+                { word: 'd', inserted: true } ] } } ])
 
   test.same(
     render(
@@ -111,8 +111,8 @@ tape('render', function(test) {
       .content,
     [ { word: 'a' },
       { word: ' ' },
-      { word: 'b', del: true },
-      { word: 'x', ins: true },
+      { word: 'b', deleted: true },
+      { word: 'x', inserted: true },
       { word: ' ' },
       { word: 'c' } ])
 
@@ -121,16 +121,16 @@ tape('render', function(test) {
       { content: [ 'Hello ', { form: { content: [ 'a b c' ] } } ] },
       { content: [ { form: { content: [ 'a d' ]   } } ] })
       .content,
-    [ { word: 'Hello', del: true },
-      { word: ' ', del: true },
+    [ { word: 'Hello', deleted: true },
+      { word: ' ', deleted: true },
       { form:
           { content:
               [ { word: 'a' },
                 { word: ' ' },
-                { word: 'b', del: true },
-                { word: ' ', del: true },
-                { word: 'c', del: true },
-                { word: 'd', ins: true } ] } } ])
+                { word: 'b', deleted: true },
+                { word: ' ', deleted: true },
+                { word: 'c', deleted: true },
+                { word: 'd', inserted: true } ] } } ])
 
   test.same(
     render(
@@ -141,14 +141,14 @@ tape('render', function(test) {
       { word: ' ' },
       { word: 'is' },
       { word: ' ' },
-      { word: 'just', del: true },
-      { word: 'an', ins: true },
+      { word: 'just', deleted: true },
+      { word: 'an', inserted: true },
       { word: ' ' },
-      { word: 'a', del: true },
-      { word: 'important', ins: true },
+      { word: 'a', deleted: true },
+      { word: 'important', inserted: true },
       { word: ' ' },
-      { word: 'test', del: true },
-      { word: 'provision', ins: true },
+      { word: 'test', deleted: true },
+      { word: 'provision', inserted: true },
       { word: '.' } ])
 
   test.same(
@@ -158,11 +158,11 @@ tape('render', function(test) {
       .content,
     [ { word: 'The' },
       { word: ' ' },
-      { use: 'Buyer', del: true },
-      { use: 'Seller', ins: true },
+      { use: 'Buyer', deleted: true },
+      { use: 'Seller', inserted: true },
       { word: ' ' },
-      { word: 'pays', del: true },
-      { word: 'withholds', ins: true },
+      { word: 'pays', deleted: true },
+      { word: 'withholds', inserted: true },
       { word: ' ' },
       { word: 'all' },
       { word: ' ' },
@@ -179,8 +179,8 @@ tape('render', function(test) {
             { word: ' ' },
             { word: 'of' },
             { word: ' ' },
-            { word: 'Words', del: true },
-            { word: 'Items', ins: true } ],
+            { word: 'Words', deleted: true },
+            { word: 'Items', inserted: true } ],
         form: {
           content:
             [ { word: 'a' },
