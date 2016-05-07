@@ -9,7 +9,7 @@ var INT_RE = /^\d+$/
 
 // Render a, showing edits from b.
 function render(a, b) {
-  var patch = diff(a, b, splitStrings)
+  var patch = diff(a, b)
     .map(function(operation) {
       if (operation.hasOwnProperty('value')) {
         operation.value = destringify(operation.value) }
