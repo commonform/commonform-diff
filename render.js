@@ -5,6 +5,7 @@ var destringifyForm = require('./destringify-form')
 var diff = require('./')
 var pointer = require('json-pointer')
 var splitStrings = require('./split-strings')
+var stack = require('./stack')
 
 // A string of digits.
 var INT_RE = /^\d+$/
@@ -48,7 +49,7 @@ function render(a, b) {
         // Splice the replacement value in _after_ the replaced value.
         var afterTargetIndex = ( targetIndex + 1 )
         containingArray.splice(afterTargetIndex, 0, value) } } })
-  return clone }
+  return stack(clone) }
 
 // Get a value from a nested data structure, using `getNth`, rather than
 // `array[index]`, to resolve array indices.

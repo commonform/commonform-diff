@@ -57,9 +57,9 @@ tape('render', function(test) {
       .content,
     [ { use: 'Seller', deleted: true },
       { word: 'The', inserted: true },
-      { word: ' ' },
-      { use: 'Buyer', inserted: true },
       { word: ' ', inserted: true },
+      { use: 'Buyer', inserted: true },
+      { word: ' ' },
       { word: 'shall' },
       { word: ' ' },
       { word: 'pay' },
@@ -76,10 +76,10 @@ tape('render', function(test) {
       { content: [ { use: 'Seller' } , ' shall pay all tax.' ] })
       .content,
     [ { word: 'The', deleted: true },
+      { word: ' ', deleted: true },
+      { use: 'Buyer', deleted: true },
       { use: 'Seller', inserted: true },
       { word: ' ' },
-      { use: 'Buyer', deleted: true },
-      { word: ' ', deleted: true },
       { word: 'shall' },
       { word: ' ' },
       { word: 'pay' },
@@ -142,12 +142,14 @@ tape('render', function(test) {
       { word: 'is' },
       { word: ' ' },
       { word: 'just', deleted: true },
-      { word: 'an', inserted: true },
-      { word: ' ' },
+      { word: ' ', deleted: true },
       { word: 'a', deleted: true },
-      { word: 'important', inserted: true },
-      { word: ' ' },
+      { word: ' ', deleted: true },
       { word: 'test', deleted: true },
+      { word: 'an', inserted: true },
+      { word: ' ', inserted: true },
+      { word: 'important', inserted: true },
+      { word: ' ', inserted: true },
       { word: 'provision', inserted: true },
       { word: '.' } ])
 
@@ -159,9 +161,10 @@ tape('render', function(test) {
     [ { word: 'The' },
       { word: ' ' },
       { use: 'Buyer', deleted: true },
-      { use: 'Seller', inserted: true },
-      { word: ' ' },
+      { word: ' ', deleted: true },
       { word: 'pays', deleted: true },
+      { use: 'Seller', inserted: true },
+      { word: ' ', inserted: true },
       { word: 'withholds', inserted: true },
       { word: ' ' },
       { word: 'all' },
@@ -188,5 +191,23 @@ tape('render', function(test) {
               { word: 'b' },
               { word: ' ' },
               { word: 'c' } ] } } ])
+
+  test.same(
+    render(
+      { content: [ 'a b c d' ] },
+      { content: [ 'a x y z' ] })
+      .content,
+    [ { word: 'a' },
+      { word: ' ' },
+      { word: 'b', deleted: true },
+      { word: ' ', deleted: true },
+      { word: 'c', deleted: true },
+      { word: ' ', deleted: true },
+      { word: 'd', deleted: true },
+      { word: 'x', inserted: true },
+      { word: ' ', inserted: true },
+      { word: 'y', inserted: true },
+      { word: ' ', inserted: true },
+      { word: 'z', inserted: true } ])
 
   test.end() })
