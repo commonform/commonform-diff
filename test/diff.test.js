@@ -1,5 +1,5 @@
 var tape = require('tape')
-var diff = require('../')
+var diff = require('../diff')
 
 tape('diff', function(test) {
 

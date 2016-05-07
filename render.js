@@ -2,7 +2,7 @@ module.exports = render
 
 var destringify = require('./destringify')
 var destringifyForm = require('./destringify-form')
-var diff = require('./')
+var diff = require('./diff')
 var pointer = require('json-pointer')
 var splitStrings = require('./split-strings')
 var stack = require('./stack')
