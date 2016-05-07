@@ -1,3 +1,7 @@
+Compare two Common Forms.
+
+For example:
+
 ```javascript
 var diff = require('commonform-diff')
 var assert = require('assert')
@@ -13,7 +17,26 @@ assert.deepEqual(
     { word: ' ', deleted: true },
     { word: 'c', deleted: true },
     { word: 'd', inserted: true } ])
+```
 
+The function returns data that's "shaped" just like a Common Form,
+with two differences:
+
+1. Strings in `content` and `heading` properties are broken into
+   objects like `{ word: 'hello' }`.
+
+2. Word and other content objects have `deleted` and `inserted`
+   properties to show changes.
+
+Replacements are shown deletion-first:
+
+> The <del>Buyer</del><ins>Seller</ins> shall ...
+
+instead of:
+
+> The <ins>Seller</ins><del>Buyer</del> shall ...
+
+```javascript
 assert.deepEqual(
   diff(
     { content: [ 'A B C' ] },
