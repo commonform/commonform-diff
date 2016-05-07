@@ -23,6 +23,18 @@ var promotableKeys = [ 'use', 'definition', 'reference', 'word' ]
 
 function commonformdiff(a, b) {
   return diff(stringifyForm(a), stringifyForm(b))
+    // The diff algorithm will look for the least-costly edit script.
+    // Sometimes that means it will replace properties of objects,
+    // rather than the object as a whole. For example:
+    //
+    // From: [ { reference: 'x' } ]
+    //
+    // To:   [ { reference: 'y' } ]
+    //
+    // The shortest edit script is to replace `content/0/reference`,
+    // rather than `content/0` as a whole.
+    //
+    // Replace undesirable property edits with object edits.
     .map(function promoteEdits(operation) {
       var op = operation.op
       var path = pointer.parse(operation.path)

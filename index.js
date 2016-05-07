@@ -27,6 +27,9 @@ var INT_RE = /^\d+$/
 
 // Render a, showing edits from b.
 function commonformdiff(a, b) {
+  // The diff algorithm is run on stringified forms, so its edit operation
+  // values for additions and replacements will be stringified. Destringify
+  // them here.
   var patch = diff(a, b)
     .map(function(operation) {
       if (operation.hasOwnProperty('value')) {
@@ -34,7 +37,10 @@ function commonformdiff(a, b) {
       return operation })
   // Apply the patch operations to a clone of `a`.
   var clone = JSON.parse(JSON.stringify(stringifyForm(a)))
+  // Destringify the clone.
   destringifyForm(clone)
+  // Apply each patch operation, preserving removed and replaced content
+  // elements so they appear in the diff.
   patch.forEach(function(operation) {
     var op = operation.op
     var path = pointer
@@ -44,6 +50,8 @@ function commonformdiff(a, b) {
       .map(function(key) {
         return ( INT_RE.test(key) ? parseInt(key) : key ) })
     if (op === 'remove') {
+      // If the operation is to remove an entire heading, mark every word in
+      // the heading as deleted.
       if (path[path.length - 1] === 'heading') {
         get(clone, path).forEach(function(element) {
           element.deleted = true }) }

@@ -15,24 +15,53 @@
 
 module.exports = stack
 
-function stack(rendering) {
-  var newContent = [ ]
-  var content = rendering.content
+// Stack replacements separated only by whitespace.
+//
+// Turns:
+//
+//     [ { word: 'a', deleted: true  },
+//       { word: 'x', inserted: true },
+//       { word: ' '                 },
+//       { word: 'b', deleted: true  },
+//       { word: 'y', inserted: true } ]
+//
+// into:
+//
+//     [ { word: 'a', deleted: true  },
+//       { word: ' ', deleted: true  },
+//       { word: 'b', deleted: true  },
+//       { word: 'x', inserted: true },
+//       { word: ' ', inserted: true },
+//       { word: 'y', inserted: true } ]
+//
+// for easier reading.
+function stack(diff) {
+  var newContent = [ ] // New array for diff.content.
+  var content = diff.content // The original, unstacked content array.
 
-  // Buffer for insertions
+  // A buffer to hold insertions.  Once we see an insertion, we start buffering
+  // all insertions that follow, until we hit common text.  At that point, we
+  // flush the buffered insertions to `newContent`.
   var insertionsBuffer = [ ]
   function flush() {
     var length = insertionsBuffer.length
     if (length != 0) {
       var lastInsertion = insertionsBuffer[length - 1]
       var trailingSpace = ( lastInsertion.word === ' ' )
+      // If there was a space before the common text that causes us to flush
+      // the insertions buffer, it will have been buffered, but we should just
+      // show it as common text.
       if (trailingSpace) {
         newContent.pop()
         insertionsBuffer.pop() }
+      // Push elements of `insertionsBuffer` to `newContent`.
       insertionsBuffer.forEach(function(element) {
         newContent.push(element) })
+      // If there was a trailing common space, it should _follow_ the flushed
+      // insertions in the new content array.
       if (trailingSpace) {
         newContent.push({ word: ' ' }) }
+      // Clear the buffer array.
       insertionsBuffer = [ ] } }
 
   content.forEach(function(element) {
@@ -43,6 +72,7 @@ function stack(rendering) {
     var isSpace = (
       element.hasOwnProperty('word') &&
       element.word === ' ' )
+    // Apply recursively to child forms.
     if (element.hasOwnProperty('form')) {
       stack(element.form) }
     if (buffering) {
@@ -64,5 +94,5 @@ function stack(rendering) {
 
   flush()
 
-  rendering.content = newContent
-  return rendering }
+  diff.content = newContent
+  return diff }

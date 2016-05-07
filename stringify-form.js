@@ -18,6 +18,10 @@ module.exports = stringifyForm
 var splitWords = require('./split-words')
 var stringify = require('./stringify')
 
+// Convert content objects like `{ use: 'term' }` to strings like 'u:term',
+// words like `{ word: 'text' }` to `w:text`, and so on. That way, when objects
+// are fed to the diff algorith, the diff solver weights the total replacement
+// of any word or content element the same.
 function stringifyForm(argument) {
   var returned = { }
   returned.content = argument.content
