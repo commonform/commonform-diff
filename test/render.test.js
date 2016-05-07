@@ -169,4 +169,24 @@ tape('render', function(test) {
       { word: 'tax' },
       { word: '.' } ])
 
+  test.same(
+    render(
+      { content: [ { heading: 'List of Words', form: { content: [ 'a b c' ] } } ] },
+      { content: [ { heading: 'List of Items', form: { content: [ 'a b c' ] } } ] })
+      .content,
+    [ { heading:
+          [ { word: 'List' },
+            { word: ' ' },
+            { word: 'of' },
+            { word: ' ' },
+            { word: 'Words', del: true },
+            { word: 'Items', ins: true } ],
+        form: {
+          content:
+            [ { word: 'a' },
+              { word: ' ' },
+              { word: 'b' },
+              { word: ' ' },
+              { word: 'c' } ] } } ])
+
   test.end() })

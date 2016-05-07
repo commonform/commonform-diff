@@ -17,6 +17,10 @@ function splitStrings(argument) {
           if (element.hasOwnProperty('heading')) {
             child.heading = element.heading }
           child.form = splitStrings(element.form)
+          if (element.hasOwnProperty('heading')) {
+            child.heading = splitWords(element.heading)
+              .map(function(word) {
+                return stringify('w', word) }) }
           return content.concat(child) }
         else {
           var stringified
