@@ -1,4 +1,4 @@
-var wordCharacter = /[a-zA-Z-]/
+var wordCharacter = /[a-zA-Z-']/
 
 module.exports = function splitWords(string) {
   var returned = [ ]

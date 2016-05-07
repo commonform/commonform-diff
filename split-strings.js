@@ -9,9 +9,9 @@ function splitStrings(argument) {
       function(content, element) {
         if (typeof element === 'string') {
           return content.concat(
-            { splits: splitWords(element)
-                .map(function(string) {
-                  return { text: string } }) }) }
+            splitWords(element)
+              .map(function(word) {
+                return stringify('w', word) })) }
         else if (element.hasOwnProperty('form')) {
           var child = { }
           if (element.hasOwnProperty('heading')) {
@@ -19,9 +19,20 @@ function splitStrings(argument) {
           child.form = splitStrings(element.form)
           return content.concat(child) }
         else {
-          var clone = JSON.parse(JSON.stringify(element))
-          return content.concat(clone) } },
+          var stringified
+          if (element.hasOwnProperty('use')) {
+            stringified = stringify('u', element.use) }
+          else if (element.hasOwnProperty('definition')) {
+            stringified = stringify('d', element.definition) }
+          else if (element.hasOwnProperty('reference')) {
+            stringified = stringify('r', element.reference) }
+          else if (element.hasOwnProperty('blank')) {
+            stringified = stringify('b', '') }
+          return content.concat(stringified) } },
       [ ])
   if (argument.conspicuous) {
     returned.conspicuous = argument.conspicuous }
   return returned }
+
+function stringify(type, string) {
+  return ( type + ':' + string ) }

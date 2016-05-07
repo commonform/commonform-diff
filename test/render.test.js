@@ -8,39 +8,36 @@ tape('render', function(test) {
       { content: [ 'a b c' ] },
       { content: [ 'a d' ] })
       .content,
-    [ { splits:
-          [ { text: 'a' },
-            { text: ' ' },
-            { text: 'b', del: true },
-            { text: ' ', del: true },
-            { text: 'c', del: true },
-            { text: 'd', ins: true } ] } ])
+    [ { word: 'a' },
+      { word: ' ' },
+      { word: 'b', del: true },
+      { word: ' ', del: true },
+      { word: 'c', del: true },
+      { word: 'd', ins: true } ])
 
   test.same(
     render(
       { content: [ 'A B C' ] },
       { content: [ 'A C' ] })
       .content,
-    [ { splits:
-          [ { text: 'A' },
-            { text: ' ' },
-            { text: 'B', del: true },
-            { text: ' ', del: true },
-            { text: 'C' } ] } ])
+    [ { word: 'A' },
+      { word: ' ' },
+      { word: 'B', del: true },
+      { word: ' ', del: true },
+      { word: 'C' } ])
 
   test.same(
     render(
       { content: [ 'A B C' ] },
       { content: [ 'A B C D' ] })
       .content,
-    [ { splits:
-          [ { text: 'A' },
-            { text: ' ' },
-            { text: 'B' },
-            { text: ' ' },
-            { text: 'C' },
-            { text: ' ', ins: true },
-            { text: 'D', ins: true } ] } ])
+    [ { word: 'A' },
+      { word: ' ' },
+      { word: 'B' },
+      { word: ' ' },
+      { word: 'C' },
+      { word: ' ', ins: true },
+      { word: 'D', ins: true } ])
 
   test.same(
     render(
@@ -49,56 +46,49 @@ tape('render', function(test) {
       .content,
     [ { use: 'Seller', del: true },
       { use: 'Buyer', ins: true },
-      { splits:
-          [ { text: ' ' },
-            { text: 'pays' },
-            { text: '.' } ] } ])
+      { word: ' ' },
+      { word: 'pays' },
+      { word: '.' } ])
 
   test.same(
     render(
       { content: [ { use: 'Seller' } , ' shall pay all tax.' ] },
       { content: [ 'The ', { use: 'Buyer' } , ' shall pay no tax.' ] })
       .content,
-    [ { splits:
-          [ { text: 'The' },
-            { text: ' ' } ],
-        ins: true },
-      { use: 'Seller', del: true },
+    [ { use: 'Seller', del: true },
+      { word: 'The', ins: true },
+      { word: ' ' },
       { use: 'Buyer', ins: true },
-      { splits:
-          [ { text: ' ' },
-            { text: 'shall' },
-            { text: ' ' },
-            { text: 'pay' },
-            { text: ' ' },
-            { text: 'all', del: true },
-            { text: 'no', ins: true },
-            { text: ' ' },
-            { text: 'tax' },
-            { text: '.' } ] } ])
+      { word: ' ', ins: true },
+      { word: 'shall' },
+      { word: ' ' },
+      { word: 'pay' },
+      { word: ' ' },
+      { word: 'all', del: true },
+      { word: 'no', ins: true },
+      { word: ' ' },
+      { word: 'tax' },
+      { word: '.' } ])
 
   test.same(
     render(
       { content: [ 'The ', { use: 'Buyer' } , ' shall pay no tax.' ] },
       { content: [ { use: 'Seller' } , ' shall pay all tax.' ] })
       .content,
-    [ { splits:
-          [ { text: 'The' },
-            { text: ' ' } ],
-        del: true },
-      { use: 'Buyer', del: true },
+    [ { word: 'The', del: true },
       { use: 'Seller', ins: true },
-      { splits:
-          [ { text: ' ' },
-            { text: 'shall' },
-            { text: ' ' },
-            { text: 'pay' },
-            { text: ' ' },
-            { text: 'no', del: true },
-            { text: 'all', ins: true },
-            { text: ' ' },
-            { text: 'tax' },
-            { text: '.' } ] } ])
+      { word: ' ' },
+      { use: 'Buyer', del: true },
+      { word: ' ', del: true },
+      { word: 'shall' },
+      { word: ' ' },
+      { word: 'pay' },
+      { word: ' ' },
+      { word: 'no', del: true },
+      { word: 'all', ins: true },
+      { word: ' ' },
+      { word: 'tax' },
+      { word: '.' } ])
 
   test.same(
     render(
@@ -107,86 +97,76 @@ tape('render', function(test) {
       .content,
     [ { form:
           { content:
-              [ { splits:
-                  [ { text: 'a' },
-                    { text: ' ' },
-                    { text: 'b', del: true },
-                    { text: ' ', del: true },
-                    { text: 'c', del: true },
-                    { text: 'd', ins: true } ] } ] } } ])
+              [ { word: 'a' },
+                { word: ' ' },
+                { word: 'b', del: true },
+                { word: ' ', del: true },
+                { word: 'c', del: true },
+                { word: 'd', ins: true } ] } } ])
 
   test.same(
     render(
       { content: [ 'a b c' ] },
       { content: [ 'a x c' ] })
       .content,
-    [ { splits:
-        [ { text: 'a' },
-          { text: ' ' },
-          { text: 'b', del: true },
-          { text: 'x', ins: true },
-          { text: ' ' },
-          { text: 'c' } ] } ])
+    [ { word: 'a' },
+      { word: ' ' },
+      { word: 'b', del: true },
+      { word: 'x', ins: true },
+      { word: ' ' },
+      { word: 'c' } ])
 
   test.same(
     render(
       { content: [ 'Hello ', { form: { content: [ 'a b c' ] } } ] },
       { content: [ { form: { content: [ 'a d' ]   } } ] })
       .content,
-    [ { splits:
-          [ { text: 'Hello' },
-            { text: ' ' } ],
-        del: true },
+    [ { word: 'Hello', del: true },
+      { word: ' ', del: true },
       { form:
           { content:
-              [ { splits:
-                    [ { text: 'a' },
-                      { text: ' ' },
-                      { text: 'b', del: true },
-                      { text: ' ', del: true },
-                      { text: 'c', del: true },
-                      { text: 'd', ins: true } ] } ] } } ])
+              [ { word: 'a' },
+                { word: ' ' },
+                { word: 'b', del: true },
+                { word: ' ', del: true },
+                { word: 'c', del: true },
+                { word: 'd', ins: true } ] } } ])
 
   test.same(
     render(
       { content: [ 'This is just a test.' ] },
       { content: [ 'This is an important provision.' ] })
       .content,
-    [ { splits:
-          [ { text: 'This' },
-            { text: ' ' },
-            { text: 'is' },
-            { text: ' ' },
-            { text: 'just', del: true },
-            { text: ' ', del: true },
-            { text: 'a', del: true },
-            { text: ' ', del: true },
-            { text: 'test', del: true },
-            { text: 'an', ins: true },
-            { text: ' ', ins: true },
-            { text: 'important', ins: true },
-            { text: ' ', ins: true },
-            { text: 'provision', ins: true },
-            { text: '.' } ] } ])
+    [ { word: 'This' },
+      { word: ' ' },
+      { word: 'is' },
+      { word: ' ' },
+      { word: 'just', del: true },
+      { word: 'an', ins: true },
+      { word: ' ' },
+      { word: 'a', del: true },
+      { word: 'important', ins: true },
+      { word: ' ' },
+      { word: 'test', del: true },
+      { word: 'provision', ins: true },
+      { word: '.' } ])
 
   test.same(
     render(
       { content: [ 'The ', { use: 'Buyer' }, ' pays all tax.' ] },
       { content: [ 'The ', { use: 'Seller' }, ' withholds all tax.' ] })
       .content,
-    [ { splits:
-          [ { text: 'The' },
-            { text: ' ' } ] },
+    [ { word: 'The' },
+      { word: ' ' },
       { use: 'Buyer', del: true },
       { use: 'Seller', ins: true },
-      { splits:
-          [ { text: ' ' },
-            { text: 'pays', del: true },
-            { text: 'withholds', ins: true },
-            { text: ' ' },
-            { text: 'all' },
-            { text: ' ' },
-            { text: 'tax' },
-            { text: '.' } ] } ])
+      { word: ' ' },
+      { word: 'pays', del: true },
+      { word: 'withholds', ins: true },
+      { word: ' ' },
+      { word: 'all' },
+      { word: ' ' },
+      { word: 'tax' },
+      { word: '.' } ])
 
   test.end() })

@@ -10,8 +10,13 @@ var INT_RE = /^\d+$/
 // Render a, showing edits from b.
 function render(a, b) {
   var patch = diff(a, b, splitStrings)
+    .map(function(operation) {
+      if (operation.hasOwnProperty('value')) {
+        operation.value = destringify(operation.value) }
+      return operation })
   // Apply the patch operations to a clone of `a`.
   var clone = JSON.parse(JSON.stringify(splitStrings(a)))
+  destringifyForm(clone)
   patch.forEach(function(operation) {
     var op = operation.op
     var path = pointer
@@ -68,3 +73,26 @@ function getNth(elements, target) {
         return index }
       count++ } }
   return ( index + 1 ) }
+
+var expansions = {
+  b: 'blank',
+  d: 'definition',
+  r: 'reference',
+  u: 'use',
+  w: 'word' }
+
+function destringifyForm(form) {
+  form.content = form.content.map(function(element) {
+    if (typeof element === 'string') {
+      return destringify(element) }
+    else {
+      destringifyForm(element.form)
+      return element } }) }
+
+function destringify(string) {
+  var split = string.split(':', 2)
+  var typeCode = split[0]
+  var value = split[1]
+  var object = { }
+  object[expansions[typeCode]] = value
+  return object }
