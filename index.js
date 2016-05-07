@@ -50,9 +50,10 @@ function commonformdiff(a, b) {
       .map(function(key) {
         return ( INT_RE.test(key) ? parseInt(key) : key ) })
     if (op === 'remove') {
+      var lastPath = path[path.length - 1]
       // If the operation is to remove an entire heading, mark every word in
       // the heading as deleted.
-      if (path[path.length - 1] === 'heading') {
+      if (lastPath === 'heading' || lastPath === 'conspicuous') {
         get(clone, path).forEach(function(element) {
           element.deleted = true }) }
       else {

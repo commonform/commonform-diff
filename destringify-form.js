@@ -23,8 +23,6 @@ function destringifyForm(form) {
       return destringify(element) }
     else {
       destringifyForm(element.form)
-      if (element.hasOwnProperty('heading')) {
-        element.heading = element.heading
-          .map(function(word) {
-            return destringify(word) }) }
+      element.heading = element.heading.map(destringify)
+      element.conspicuous = element.conspicuous.map(destringify)
       return element } }) }

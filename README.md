@@ -269,4 +269,13 @@ assert.deepEqual(
   [ { heading: [ ],
       conspicuous: [ { word: 'yes', inserted: true } ],
       form: { content: [ { word: 'a' } ] } } ])
+
+assert.deepEqual(
+  diff(
+    { content: [ { conspicuous: 'yes', form: { content: [ 'a' ] } } ] },
+    { content: [ {                     form: { content: [ 'a' ] } } ] })
+    .content,
+  [ { heading: [ ],
+      conspicuous: [ { word: 'yes', deleted: true } ],
+      form: { content: [ { word: 'a' } ] } } ])
 ```
