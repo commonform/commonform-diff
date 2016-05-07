@@ -1,30 +1,30 @@
 {
   "name": "commonform-diff",
-  "version": "0.0.0",
   "description": "compare Common Forms",
+  "version": "0.0.0",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (https://kemitchell.com/)",
-  "repository": "commonform/commonform-diff",
+  "dependencies": {
+    "json-pointer": "^0.5.0",
+    "keyarray-get": "^0.1.0",
+    "rfc6902-json-diff": "^0.1.2",
+    "setp": "^1.0.0"
+  },
+  "devDependencies": {
+    "defence-cli": "^2.0.0",
+    "replace-require-self": "^1.1.1",
+    "tape": "^4.4.0"
+  },
   "files": [
     "LICENSE",
     "NOTICE",
     "README.md",
     "index.js"
   ],
-  "devDependencies": {
-    "defence-cli": "^2.0.0",
-    "replace-require-self": "^1.1.1",
-    "tape": "^4.4.0"
-  },
-  "scripts": {
-    "test:readme": "defence README.md | replace-require-self | node",
-    "test:tape": "tape test/*.test.js",
-    "test": "npm run test:tape && npm run test:readme"
-  },
   "license": "Apache-2.0",
-  "dependencies": {
-    "json-pointer": "^0.5.0",
-    "keyarray-get": "^0.1.0",
-    "rfc6902-json-diff": "^0.1.2",
-    "setp": "^1.0.0"
+  "repository": "commonform/commonform-diff",
+  "scripts": {
+    "test": "npm run test:tape && npm run test:readme",
+    "test:readme": "defence README.md | replace-require-self | node",
+    "test:tape": "tape test/*.test.js"
   }
 }
