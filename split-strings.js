@@ -29,14 +29,14 @@ function splitStrings(argument) {
               .map(function(word) {
                 return stringify('w', word) })) }
         else if (element.hasOwnProperty('form')) {
-          var child = { }
-          if (element.hasOwnProperty('heading')) {
-            child.heading = element.heading }
+          var child =
+            { heading: (
+                element.hasOwnProperty('heading')
+                  ? splitWords(element.heading)
+                      .map(function(word) {
+                        return stringify('w', word) })
+                  : [ ] ) }
           child.form = splitStrings(element.form)
-          if (element.hasOwnProperty('heading')) {
-            child.heading = splitWords(element.heading)
-              .map(function(word) {
-                return stringify('w', word) }) }
           return content.concat(child) }
         else {
           var stringified

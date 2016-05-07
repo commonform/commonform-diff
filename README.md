@@ -117,7 +117,8 @@ assert.deepEqual(
     { content: [ { form: { content: [ 'a b c' ] } } ] },
     { content: [ { form: { content: [ 'a d' ]   } } ] })
     .content,
-  [ { form:
+  [ { heading: [ ],
+      form:
         { content:
             [ { word: 'a' },
               { word: ' ' },
@@ -145,7 +146,8 @@ assert.deepEqual(
     .content,
   [ { word: 'Hello', deleted: true },
     { word: ' ',     deleted: true },
-    { form:
+    { heading: [ ],
+      form:
         { content:
             [ { word: 'a' },
               { word: ' ' },
@@ -231,4 +233,20 @@ assert.deepEqual(
     { word: 'y', inserted: true },
     { word: ' ', inserted: true },
     { word: 'z', inserted: true } ])
+
+assert.deepEqual(
+  diff(
+    { content: [ { heading: 'x', form: { content: [ 'a' ] } } ] },
+    { content: [ {               form: { content: [ 'a' ] } } ] })
+    .content,
+  [ { heading: [ { word: 'x', deleted: true } ],
+      form: { content: [ { word: 'a' } ] } } ])
+
+assert.deepEqual(
+  diff(
+    { content: [ {               form: { content: [ 'a' ] } } ] },
+    { content: [ { heading: 'x', form: { content: [ 'a' ] } } ] })
+    .content,
+  [ { heading: [ { word: 'x', inserted: true } ],
+      form: { content: [ { word: 'a' } ] } } ])
 ```

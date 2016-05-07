@@ -44,8 +44,12 @@ function commonformdiff(a, b) {
       .map(function(key) {
         return ( INT_RE.test(key) ? parseInt(key) : key ) })
     if (op === 'remove') {
-      // Mark deleted.
-      get(clone, path).deleted = true }
+      if (path[path.length - 1] === 'heading') {
+        get(clone, path).forEach(function(element) {
+          element.deleted = true }) }
+      else {
+        // Mark deleted.
+        get(clone, path).deleted = true } }
     else {
       var containingArray
       var targetIndex
