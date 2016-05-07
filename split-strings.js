@@ -1,6 +1,7 @@
 module.exports = splitStrings
 
 var splitWords = require('./split-words')
+var stringify = require('./stringify')
 
 function splitStrings(argument) {
   var returned = { }
@@ -37,6 +38,3 @@ function splitStrings(argument) {
   if (argument.conspicuous) {
     returned.conspicuous = argument.conspicuous }
   return returned }
-
-function stringify(type, string) {
-  return ( type + ':' + string ) }

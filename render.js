@@ -1,5 +1,7 @@
 module.exports = render
 
+var destringify = require('./destringify')
+var destringifyForm = require('./destringify-form')
 var diff = require('./')
 var pointer = require('json-pointer')
 var splitStrings = require('./split-strings')
@@ -73,30 +75,3 @@ function getNth(elements, target) {
         return index }
       count++ } }
   return ( index + 1 ) }
-
-var expansions = {
-  b: 'blank',
-  d: 'definition',
-  r: 'reference',
-  u: 'use',
-  w: 'word' }
-
-function destringifyForm(form) {
-  form.content = form.content.map(function(element) {
-    if (typeof element === 'string') {
-      return destringify(element) }
-    else {
-      destringifyForm(element.form)
-      if (element.hasOwnProperty('heading')) {
-        element.heading = element.heading
-          .map(function(word) {
-            return destringify(word) }) }
-      return element } }) }
-
-function destringify(string) {
-  var split = string.split(':', 2)
-  var typeCode = split[0]
-  var value = split[1]
-  var object = { }
-  object[expansions[typeCode]] = value
-  return object }
