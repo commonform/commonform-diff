@@ -1,5 +1,5 @@
 var tape = require('tape')
-var render = require('../render')
+var render = require('../')
 
 tape('render', function(test) {
 
