@@ -1,4 +1,4 @@
-module.exports = render
+module.exports = commonformdiff
 
 var destringify = require('./destringify')
 var destringifyForm = require('./destringify-form')
@@ -11,7 +11,7 @@ var stack = require('./stack')
 var INT_RE = /^\d+$/
 
 // Render a, showing edits from b.
-function render(a, b) {
+function commonformdiff(a, b) {
   var patch = diff(a, b)
     .map(function(operation) {
       if (operation.hasOwnProperty('value')) {
