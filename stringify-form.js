@@ -22,9 +22,9 @@ var stringify = require('./stringify')
 // words like `{ word: 'text' }` to `w:text`, and so on. That way, when objects
 // are fed to the diff algorith, the diff solver weights the total replacement
 // of any word or content element the same.
-function stringifyForm(argument) {
+function stringifyForm(form) {
   var returned = { }
-  returned.content = argument.content
+  returned.content = form.content
     .reduce(
       function(content, element) {
         if (typeof element === 'string') {
@@ -40,10 +40,6 @@ function stringifyForm(argument) {
                       .map(function(word) {
                         return stringify('w', word) })
                   : [ ] ),
-              conspicuous: (
-                element.hasOwnProperty('conspicuous')
-                  ? [ stringify('w', element.conspicuous) ]
-                  : [ ] ),
               form: stringifyForm(element.form) }
           return content.concat(child) }
         else {
@@ -58,6 +54,8 @@ function stringifyForm(argument) {
             stringified = stringify('b', '') }
           return content.concat(stringified) } },
       [ ])
-  if (argument.conspicuous) {
-    returned.conspicuous = argument.conspicuous }
+  returned.conspicuous = (
+    form.hasOwnProperty('conspicuous')
+      ? [ stringify('w', form.conspicuous) ]
+      : [ ] )
   return returned }

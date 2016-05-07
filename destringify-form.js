@@ -18,11 +18,11 @@ module.exports = destringifyForm
 var destringify = require('./destringify')
 
 function destringifyForm(form) {
+  form.conspicuous = form.conspicuous.map(destringify)
   form.content = form.content.map(function(element) {
     if (typeof element === 'string') {
       return destringify(element) }
     else {
       destringifyForm(element.form)
       element.heading = element.heading.map(destringify)
-      element.conspicuous = element.conspicuous.map(destringify)
       return element } }) }

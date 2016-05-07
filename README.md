@@ -124,9 +124,9 @@ assert.deepEqual(
     { content: [ { form: { content: [ 'a d' ]   } } ] })
     .content,
   [ { heading: [ ],
-      conspicuous: [ ],
       form:
-        { content:
+        { conspicuous: [ ],
+          content:
             [ { word: 'a'                 },
               { word: ' '                 },
               { word: 'b', deleted: true  },
@@ -154,9 +154,9 @@ assert.deepEqual(
   [ { word: 'Hello', deleted: true },
     { word: ' ',     deleted: true },
     { heading: [ ],
-      conspicuous: [ ],
       form:
-        { content:
+        { conspicuous: [ ],
+          content:
             [ { word: 'a'                 },
               { word: ' '                 },
               { word: 'b', deleted: true  },
@@ -216,14 +216,14 @@ assert.deepEqual(
           { word: ' '                     },
           { word: 'Words', deleted: true  },
           { word: 'Items', inserted: true } ],
-      conspicuous: [ ],
-      form: {
-        content:
-          [ { word: 'a' },
-            { word: ' ' },
-            { word: 'b' },
-            { word: ' ' },
-            { word: 'c' } ] } } ])
+      form:
+        { conspicuous: [ ],
+          content:
+            [ { word: 'a' },
+              { word: ' ' },
+              { word: 'b' },
+              { word: ' ' },
+              { word: 'c' } ] } } ])
 
 assert.deepEqual(
   diff(
@@ -249,8 +249,9 @@ assert.deepEqual(
     { content: [ {               form: { content: [ 'a' ] } } ] })
     .content,
   [ { heading: [ { word: 'x', deleted: true } ],
-      conspicuous: [ ],
-      form: { content: [ { word: 'a' } ] } } ])
+      form:
+        { conspicuous: [ ],
+          content: [ { word: 'a' } ] } } ])
 
 assert.deepEqual(
   diff(
@@ -258,24 +259,27 @@ assert.deepEqual(
     { content: [ { heading: 'x', form: { content: [ 'a' ] } } ] })
     .content,
   [ { heading: [ { word: 'x', inserted: true } ],
-      conspicuous: [ ],
-      form: { content: [ { word: 'a' } ] } } ])
+      form:
+        { conspicuous: [ ],
+          content: [ { word: 'a' } ] } } ])
 
 assert.deepEqual(
   diff(
-    { content: [ {                     form: { content: [ 'a' ] } } ] },
-    { content: [ { conspicuous: 'yes', form: { content: [ 'a' ] } } ] })
+    { content: [ { form: {                     content: [ 'a' ] } } ] },
+    { content: [ { form: { conspicuous: 'yes', content: [ 'a' ] } } ] })
     .content,
   [ { heading: [ ],
-      conspicuous: [ { word: 'yes', inserted: true } ],
-      form: { content: [ { word: 'a' } ] } } ])
+      form:
+        { conspicuous: [ { word: 'yes', inserted: true } ],
+          content: [ { word: 'a' } ] } } ])
 
 assert.deepEqual(
   diff(
-    { content: [ { conspicuous: 'yes', form: { content: [ 'a' ] } } ] },
-    { content: [ {                     form: { content: [ 'a' ] } } ] })
+    { content: [ { form: { conspicuous: 'yes', content: [ 'a' ] } } ] },
+    { content: [ { form: {                     content: [ 'a' ] } } ] })
     .content,
   [ { heading: [ ],
-      conspicuous: [ { word: 'yes', deleted: true } ],
-      form: { content: [ { word: 'a' } ] } } ])
+      form:
+        { conspicuous: [ { word: 'yes', deleted: true } ],
+        content: [ { word: 'a' } ] } } ])
 ```
