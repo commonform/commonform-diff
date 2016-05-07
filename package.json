@@ -3,6 +3,7 @@
   "description": "compare Common Forms",
   "version": "0.0.0",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (https://kemitchell.com/)",
+  "bin": "./bin",
   "dependencies": {
     "json-pointer": "^0.5.0",
     "keyarray-get": "^0.1.0",
