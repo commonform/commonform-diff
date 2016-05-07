@@ -28,6 +28,12 @@ with two differences:
 2. Word and other content objects have `deleted` and `inserted`
    properties to show changes.
 
+3. Every child has a `heading` array.  Children without headings
+   have empty `heading` arrays.
+
+4. Every form has a `conspicuous` array.  Inconspicuous forms
+   have empty `conspicuous` arrays.
+
 Replacements are shown deletion-first:
 
 > The <del>Buyer</del><ins>Seller</ins> shall ...
