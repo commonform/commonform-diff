@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-var wordCharacter = /[a-zA-Z-']/
+var wordCharacter = /[a-zA-Z0-9-']/
 
 module.exports = function splitWords(string) {
   var returned = [ ]
