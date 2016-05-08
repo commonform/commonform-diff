@@ -33,7 +33,12 @@ function commonformdiff(a, b) {
   var patch = diff(a, b)
     .map(function(operation) {
       if (operation.hasOwnProperty('value')) {
-        operation.value = destringify(operation.value) }
+        var value = operation.value
+        if (value.hasOwnProperty('form')) {
+          destringifyForm(value.form)
+          value.heading = value.heading.map(destringify) }
+        else {
+          operation.value = destringify(value) } }
       return operation })
   // Apply the patch operations to a clone of `a`.
   var clone = JSON.parse(JSON.stringify(stringifyForm(a)))

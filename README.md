@@ -297,3 +297,18 @@ assert.deepEqual(
         { conspicuous: [ { word: 'yes', deleted: true } ],
           content: [ { word: 'a' } ] } } ])
 ```
+
+Addition of a child:
+
+```javascript
+assert.deepEqual(
+  diff(
+    { content:
+        [ { form: { content: [ 'a' ] } } ] },
+    { content:
+        [ { form: { content: [ 'a' ] } },
+          { form: { content: [ 'b' ] } } ] })
+    .content,
+  [ { heading: [ ], form: { conspicuous: [ ], content: [ { word: 'a' } ] }                 },
+    { heading: [ ], form: { conspicuous: [ ], content: [ { word: 'b' } ] }, inserted: true } ])
+```
